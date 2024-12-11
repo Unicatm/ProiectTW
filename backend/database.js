@@ -1,13 +1,23 @@
-const mysql = require('mariadb');
+const { Sequelize } = require("sequelize");
 
-const pool = mysql.createPool({
-  host: '127.0.0.1',
-  user: 'ASUS',
-  password: 'parola123',
-  database: 'proiecttw',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+const sequelize = new Sequelize("proiecttw", "ASUS", "parola123", {
+  host: "127.0.0.1",
+  dialect: "mariadb",
+  logging: false, //opreste acele log-uri de tip sql
+  pool: {
+    max: 10,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
 });
 
-module.exports = pool;
+sequelize.authenticate()
+  .then(() => {
+    console.log("Conexiunea cu baza de date a fost realizată cu succes!");
+  })
+  .catch((err) => {
+    console.error("Eroare la conectarea cu baza de date:", err);
+  });
+
+module.exports = sequelize;
