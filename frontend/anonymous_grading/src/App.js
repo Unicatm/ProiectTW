@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Tehnologii Web
+          Tehnologii Webbbbb
         </a>
       </header>
     </div>
