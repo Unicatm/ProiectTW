@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const db = require('../database');
 const Proiect = require('./Proiect');
 
@@ -8,14 +8,6 @@ const Livrabil = db.define('Livrabil', {
         primaryKey: true,
         autoIncrement: true,
     },
-    idProiect: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: Proiect,
-            key: 'id',
-        },
-    },
     titlu: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -24,7 +16,7 @@ const Livrabil = db.define('Livrabil', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    linkVideo: {
+    link: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -32,9 +24,17 @@ const Livrabil = db.define('Livrabil', {
         type: DataTypes.DATE,
         allowNull: false,
     },
+    idProiect: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Proiect,
+            key: 'id',
+        },
+    },
 }, {
-    timestamps: false,
     tableName: 'livrabil',
+    timestamps: false,
 });
 
 module.exports = Livrabil;
