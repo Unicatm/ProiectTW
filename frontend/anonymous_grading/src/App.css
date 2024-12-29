@@ -1,5 +1,49 @@
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  text-align: center; 
+
+}
+
+.App div {
+  margin: 10px;
+}
+
+.Register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  text-align: center; 
+}
+
+.Register div {
+  margin: 10px;
+}
+
+.Register input {
+  margin: 10px;
+}
+
+.Login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  text-align: center; 
+}
+
+.Login div {
+  margin: 10px;
+}
+
+.Login input {
+  margin: 10px;
 }
 
 .App-logo {
