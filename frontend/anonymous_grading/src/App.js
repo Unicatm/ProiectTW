@@ -1,8 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
-import Button from './Button';
-import Register from './Register';
-import Login from './Login';
+import Button from './components/Button';
+import Register from './classes/Register';
+import Login from './classes/Login';
 import {BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 
 

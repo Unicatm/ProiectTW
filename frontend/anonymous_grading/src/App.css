@@ -21,13 +21,6 @@
   text-align: center; 
 }
 
-.Register div {
-  margin: 10px;
-}
-
-.Register input {
-  margin: 10px;
-}
 
 .Login {
   display: flex;
@@ -38,13 +31,6 @@
   text-align: center; 
 }
 
-.Login div {
-  margin: 10px;
-}
-
-.Login input {
-  margin: 10px;
-}
 
 .App-logo {
   height: 40vmin;
