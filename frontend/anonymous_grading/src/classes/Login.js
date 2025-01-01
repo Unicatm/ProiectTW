@@ -5,8 +5,11 @@ import LogInForm from "../components/LogInForm";
 import AlertComponent from "../components/Alert";
 import useAlertSetter from "./useAlertSetter";
 
+import {BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+
 const Login = () => {
 
+    const navigate = useNavigate();
     const { alert, showAlert } = useAlertSetter();
 
     const buttonClicked = () => {
@@ -37,6 +40,7 @@ const Login = () => {
            showAlert("success", "Logare cu succes");
             emailInput.value = "";
             passwordInput.value = "";
+            navigate('/Profesor');
         }
     }
 
