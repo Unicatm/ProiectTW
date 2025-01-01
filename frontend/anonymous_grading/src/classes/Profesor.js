@@ -1,10 +1,12 @@
 import React from "react";
-import Toolbar from "../components/Toolbar";
+import ToolbarApp from "../components/Toolbar";
 
 const ProfesorPage = () => {
     return (
         <div>
-            <Toolbar name="Kristian Prendi"/>
+            <ToolbarApp name="Kristian Prendi"/>
         </div>
     );
 }
+
+export default ProfesorPage;
