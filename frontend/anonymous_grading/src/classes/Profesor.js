@@ -1,8 +1,26 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
 import Toolbar from "../components/Toolbar";
 import CustomizedAccordions from "../components/ExpandableList";
 
 const ProfesorPage = () => {
+
+    // const [users, setUsers] = useState([]);
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await axios.get('http://localhost:8080/users');
+    //             setUsers(response.data);
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //         }
+    //     };
+
+    //     fetchData();
+    // }, []);
+
+    // console.log(users);
 
     const livarbilele = []
     for (let i = 0; i < 5; i++) {
