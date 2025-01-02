@@ -2,7 +2,6 @@ import './App.css';
 import Button from './components/Button';
 import Register from './classes/Register';
 import Login from './classes/Login';
-import ProfesorPage from './classes/Profesor';
 import {BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 
 
@@ -44,7 +43,6 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/profesor" element={<ProfesorPage />} />
       </Routes>
     </Router>
   );
