@@ -3,7 +3,7 @@ import utils from "./Utils";
 import Button from "../components/Button";
 import LogInForm from "../components/LogInForm"; 
 import AlertComponent from "../components/Alert";
-import useAlertSetter from "./useAlertSetter";
+import useAlertSetter from "../hooks/useAlertSetter";
 
 import {BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 

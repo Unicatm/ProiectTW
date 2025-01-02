@@ -4,7 +4,7 @@ import Utils from "./Utils";
 import RegisterForm from "../components/RegisterForm";
 import AlertComponent from "../components/Alert";
 import User from "./User";
-import useAlertSetter from "./useAlertSetter";
+import useAlertSetter from "../hooks/useAlertSetter";
 
 
 const Register = () => {
