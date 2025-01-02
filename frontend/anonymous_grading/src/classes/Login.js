@@ -40,6 +40,7 @@ const Login = () => {
            showAlert("success", "Logare cu succes");
             emailInput.value = "";
             passwordInput.value = "";
+            navigate("/profesor");
         }
     }
 
