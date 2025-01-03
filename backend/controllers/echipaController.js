@@ -1,60 +1,57 @@
 const Echipa = require('../models/Echipa');
 
-const getEchipe = async (req, res) => {
+const getAllEchipe = async (req, res) => {
     try {
         const echipe = await Echipa.findAll();
-        res.status(200).json(echipe);
+        res.json(echipe);
     } catch (error) {
-        res.status(500).json({ message: 'Eroare la obtinerea echipelor', error });
+        res.status(500).json({ error: error.message });
+    }
+};
+
+const getEchipaById = async (req, res) => {
+    try {
+        const echipa = await Echipa.findByPk(req.params.id);
+        if (!echipa) return res.status(404).json({ message: 'Echipa nu a fost găsită' });
+        res.json(echipa);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };
 
 const createEchipa = async (req, res) => {
     try {
-        const { nume, idUser } = req.body;
-        const newEchipa = await Echipa.create({ nume, idUser });
-        res.status(200).json(newEchipa);
+        const echipa = await Echipa.create(req.body);
+        res.status(201).json(echipa);
     } catch (error) {
-        res.status(500).json({ message: 'Eroare la crearea echipei.', error });
+        res.status(500).json({ error: error.message });
     }
 };
 
 const updateEchipa = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { nume, idUser } = req.body;
-
-        const echipa = await Echipa.findByPk(id);
-        if (!echipa) {
-            return res.status(404).json({ message: 'Echipa nu a fost gasita' });
-        }
-
-        await echipa.update({ nume, idUser });
-        res.status(200).json(echipa);
+        const [updated] = await Echipa.update(req.body, { where: { idEchipa: req.params.id } });
+        if (!updated) return res.status(404).json({ message: 'Echipa nu a fost găsită' });
+        res.json({ message: 'Echipa a fost actualizată' });
     } catch (error) {
-        res.status(500).json({ message: 'Eroare la actualizarea echipei', error });
+        res.status(500).json({ error: error.message });
     }
 };
 
 const deleteEchipa = async (req, res) => {
     try {
-        const { id } = req.params;
-        const echipa = await Echipa.findByPk(id);
-
-        if (!echipa) {
-            res.status(404).json({ message: 'Echipa nu a fost gasita' });
-        }
-
-        await echipa.destroy();
-        res.status(200).json({ message: 'Echipa a fost stearsa cu succes!' });
+        const deleted = await Echipa.destroy({ where: { idEchipa: req.params.id } });
+        if (!deleted) return res.status(404).json({ message: 'Echipa nu a fost găsită' });
+        res.json({ message: 'Echipa a fost ștearsă' });
     } catch (error) {
-        res.status(500).json({ message: 'Eroare la stergerea echipei', error });
+        res.status(500).json({ error: error.message });
     }
-}
+};
 
 module.exports = {
+    getAllEchipe,
+    getEchipaById,
     createEchipa,
-    getEchipe,
     updateEchipa,
     deleteEchipa,
 };

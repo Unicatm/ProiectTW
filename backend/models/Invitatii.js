@@ -1,20 +1,13 @@
 const { DataTypes } = require('sequelize');
 const db = require('../database');
 const Echipa = require('./Echipa');
+const User = require('./User');
 
-const Proiect = db.define('Proiect', {
+const Invitatii = db.define('Invitatii', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-    },
-    titlu: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    descriere: {
-        type: DataTypes.STRING,
-        allowNull: true,
     },
     idEchipa: {
         type: DataTypes.INTEGER,
@@ -24,9 +17,21 @@ const Proiect = db.define('Proiect', {
             key: 'idEchipa',
         },
     },
+    idUser: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: User,
+            key: 'id',
+        },
+    },
+    status: {
+        type: DataTypes.STRING,
+        allowNull: false, // "pending", "accepted", "rejected"
+    },
 }, {
-    tableName: 'proiect',
+    tableName: 'invitatii',
     timestamps: false,
 });
 
-module.exports = Proiect;
+module.exports = Invitatii;
