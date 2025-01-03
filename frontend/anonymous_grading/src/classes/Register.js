@@ -5,11 +5,12 @@ import RegisterForm from "../components/RegisterForm";
 import AlertComponent from "../components/Alert";
 import User from "./User";
 import useAlertSetter from "../hooks/useAlertSetter";
+import addUser from "../DBinteractions/addUser";
 
 
 const Register = () => {
     const { alert, showAlert } = useAlertSetter();
-    const buttonClicked = () => { 
+    const buttonClicked = async () => { 
        
         const emailInput = document.getElementById("email");
         const passwordInput = document.getElementById("password");
@@ -76,16 +77,30 @@ const Register = () => {
         }
         else{
            if(Utils.checkIfProfessor(email)){
-                const user = new User(1, name, surname, "profesor", email, password);
-                user.setIdentificator();
+                const numeComplet = name+" "+surname;
+                const user = {
+                     nume: numeComplet,
+                     email: email,
+                     parola: password,
+                     rol: "profesor"
+                }
+                //const user = new User(numeComplet, "profesor", email, password);
+                //user.setIdentificator();
                 console.log(user);
+                await addUser(user);
 
                 showAlert("success", "Contul de Profesor creat cu Succes");
            }
            else{
-                const user = new User(1, name, surname, "student", email, password);
-                user.setIdentificator();
-                console.log(user);
+            const numeComplet = name+" "+surname;
+            const user = {
+                 nume: numeComplet,
+                 email: email,
+                 parola: password,
+                 rol: "student"
+            }         
+            await addUser(user);      
+               // console.log(user);
                 showAlert("success", "Contul de Student creat cu Succes");
            }
            

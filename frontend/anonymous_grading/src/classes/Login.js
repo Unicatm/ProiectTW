@@ -5,38 +5,14 @@ import LogInForm from "../components/LogInForm";
 import AlertComponent from "../components/Alert";
 import useAlertSetter from "../hooks/useAlertSetter";
 import fetchUsers from "../DBinteractions/fetchUsers";
-
-
 import {BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
-    const [users, setUsers] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-    
-        useEffect(() => {
-            
-            const loadUsers = async () => {
-                try {
-                    const data = await fetchUsers(); 
-                    setUsers(data);
-                } catch (err) {
-                    setError(err.message);
-                } finally {
-                    setIsLoading(false);
-                }
-            };
-    
-            loadUsers();
-        
-        }, []);
-
-    console.log(users);
     const navigate = useNavigate();
     const { alert, showAlert } = useAlertSetter();
 
-    const buttonClicked = () => {
+    const buttonClicked = async () => {
         const emailInput = document.getElementById("email");
         const passwordInput = document.getElementById("password");
         const email = emailInput.value;
@@ -61,6 +37,9 @@ const Login = () => {
              passwordInput.value = "";
          }
         else{
+            const users = await fetchUsers();
+            
+            console.log(users);
             // Vedem daca utilizatorul exista
             const user = utils.checkIfUserExists(users, email);
             if (user === null){
@@ -69,10 +48,10 @@ const Login = () => {
                 passwordInput.value = "";
             }
             else{
-              if (utils.checkConfirmPassword(user['password'], passwordInput.value)){
+              if (utils.checkConfirmPassword(user['parola'], passwordInput.value)){
                  if (utils.checkIfProfessor(emailInput.value) == true){
                 
-                 navigate("/profesor");
+                 navigate("/profesor", {state : {username: user.nume}} );
               }
             }
               else{
