@@ -1,5 +1,6 @@
 
-class Utils {
+class Utils
+{
     static checkEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
@@ -46,7 +47,19 @@ class Utils {
         else {
             return false;
     }
-}
+   }
+
+   static checkIfEmailHasAccount(emailDB, emailInput){
+      return emailDB === emailInput;
+   }
+
+   static checkIfUserExists(users, email){
+      for(const user of users){
+         if (user['email'] === email)
+            return user
+      }
+      return null;
+   }
 }
 export default Utils;
 

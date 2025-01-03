@@ -23,7 +23,7 @@ const ProfesorPage = () => {
         loadUsers();
     }, []);
 
-    console.log(users);
+    //console.log(users);
 
     const livarbilele = Array(5).fill({
         "Jurat 1": 10,
