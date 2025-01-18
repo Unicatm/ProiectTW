@@ -45,38 +45,53 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-const CustomizedAccordions = ({livarbilele, profesori}) => {
-  const [expanded, setExpanded] = React.useState('panel1');
+const CustomizedAccordions = ({ datePrintare }) => {
+  const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
 
+
   return (
     <div>
-      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          <Typography component="span">
-          {Object.entries(profesori).map(([key, value]) => (
-        <div key={key} className="accordion-item">
-            <strong>{key}:</strong> {value}
-        </div>
-          ))}
+      {datePrintare.map((item, index) => (
+        <Accordion
+          key={index}
+          expanded={expanded === `panel${index}`}
+          onChange={handleChange(`panel${index}`)}
+        >
+          <AccordionSummary
+            aria-controls={`panel${index}d-content`}
+            id={`panel${index}d-header`}
+          >
+            <Typography component="span">
+              <strong>Nume Proiect:</strong> {item.proiect["titlu"]} <br />
+              <strong>Numarul de Livrabile:</strong> {item.proiect["NumarLivrabile"]} <br />
+              <strong>Media Finala:</strong> {item.proiect["Media"]}
             </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-          {Object.entries(livarbilele).map(([key, value]) => (
-        <div key={key} className="accordion-item">
-          <strong>{key}:</strong> {value}
-        </div>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              {Array.isArray(item.livrabile) && item.livrabile.length > 0 ? (
+                item.livrabile.map((livrabil, livIndex) => (
+                  <div key={livIndex} style={{ marginBottom: "10px" }}>
+
+                    <Typography><strong>Nume Livrabil:</strong> {livrabil.nume}</Typography>
+                    <Typography><strong>Nota:</strong> {livrabil.nota}</Typography>
+                    <hr />
+                  </div>
+                ))
+              ) : (
+                <Typography>Nu exista livrabile</Typography>
+              )}
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
       ))}
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      
     </div>
   );
-}
+};
+
 
 export default CustomizedAccordions;

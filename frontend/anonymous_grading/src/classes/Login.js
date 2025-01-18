@@ -5,6 +5,8 @@ import LogInForm from "../components/LogInForm";
 import AlertComponent from "../components/Alert";
 import useAlertSetter from "../hooks/useAlertSetter";
 import fetchUsers from "../DBinteractions/fetchUsers";
+import getLivrabilele from "../DBinteractions/getLivrabilele";
+import getProiecte from "../DBinteractions/getProiecte";
 import {BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -38,8 +40,23 @@ const Login = () => {
          }
         else{
             const users = await fetchUsers();
-            
-            console.log(users);
+            const proiecte = await getProiecte();
+            const livrabile = await getLivrabilele();
+            const livrabileProiecte = [];
+            for (let proiect of proiecte){
+                let livrabilProiect = [];
+                for (let livrabil of livrabile){
+                    if (proiect.id === livrabil.idProiect){
+                        livrabilProiect.push(livrabil);
+                    }
+                }
+                const proiectLivrabile = {
+                    proiect: proiect,
+                    livrabile: livrabilProiect
+                };
+                livrabileProiecte.push(proiectLivrabile);
+            }
+            console.log(livrabileProiecte);
             // Vedem daca utilizatorul exista
             const user = utils.checkIfUserExists(users, email);
             if (user === null){
@@ -50,8 +67,11 @@ const Login = () => {
             else{
               if (utils.checkConfirmPassword(user['parola'], passwordInput.value)){
                  if (utils.checkIfProfessor(emailInput.value) == true){
-                
-                 navigate("/profesor", {state : {username: user.nume}} );
+                  localStorage.setItem("authTokenP", btoa(emailInput.value+":"+Date.now()));
+                 navigate("/profesor", {state : {username: user.nume, date:livrabileProiecte}} );
+              }
+              else{
+                // aici vine pentru student
               }
             }
               else{
@@ -70,7 +90,7 @@ const Login = () => {
          {alert.visible && (
                     <AlertComponent severity={alert.severity} message={alert.message} />
                 )}
-            <h1>Login to your account</h1>
+            <h1>Logare in cont</h1>
              <LogInForm/>
             
             <div>

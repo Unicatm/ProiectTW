@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../database');
 const Proiect = require('./Proiect');
+const Juriu = require('./Juriu');
 
 const Livrabil = db.define('Livrabil', {
     id: {
@@ -31,6 +32,18 @@ const Livrabil = db.define('Livrabil', {
             model: Proiect,
             key: 'id',
         },
+    },
+    idJuriu:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Juriu,
+            key: 'idJuriu',
+        },
+    },
+    nota: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
     },
 }, {
     tableName: 'livrabil',

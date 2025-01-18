@@ -21,8 +21,8 @@ const getLivrabilById = async (req, res) => {
 
 const createLivrabil = async (req, res) => {
     try {
-        const { titlu, descriere, link, data, idProiect } = req.body;
-        const livrabil = await Livrabil.create({ titlu, descriere, link, data, idProiect });
+        const { titlu, descriere, link, data, idProiect, idJuriu, nota } = req.body;
+        const livrabil = await Livrabil.create({ titlu, descriere, link, data, idProiect, idJuriu, nota });
         res.status(201).json(livrabil);
     } catch (error) {
         res.status(500).json({ error: error.message });

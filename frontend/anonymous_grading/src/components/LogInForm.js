@@ -25,7 +25,7 @@ const LogInForm = () => {
                 <TextField
                     required
                     id="password"
-                    label="Password"
+                    label="Parola"
                     defaultValue=""
                     variant="outlined"
                     type="password"

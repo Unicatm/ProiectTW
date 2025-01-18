@@ -112,7 +112,7 @@ const Register = () => {
             {alert.visible && 
             <AlertComponent severity={alert.severity} message={alert.message} />
             }
-            <h1>Register</h1>
+            <h1>Înregistrare</h1>
             
             <RegisterForm />
                 
