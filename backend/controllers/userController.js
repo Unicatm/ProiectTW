@@ -1,63 +1,27 @@
 const User = require('../models/User');
 
-
-const getUsers = async (req, res) => {
+const getAllUsers = async (req, res) => {
     try {
         const users = await User.findAll();
-        res.status(200).json(users);
+        res.json(users);
     } catch (error) {
-        res.status(500).json({ message: 'Eroare la obținerea utilizatorilor', error });
+        res.status(500).json({ error: error.message });
     }
 };
 
 const createUser = async (req, res) => {
+    const { nume, email, parola, rol } = req.body;
     try {
-        const { nume, email, password, rol } = req.body;
-        const newUser = await User.create({ nume, email, password, rol });
+        const newUser = await User.create({ nume, email, parola, rol });
         res.status(201).json(newUser);
     } catch (error) {
-        res.status(500).json({ message: 'Eroare la crearea utilizatorului', error });
-    }
-};
-
-const updateUser = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { nume, email, password, rol } = req.body;
-
-        const user = await User.findByPk(id);
-        if (!user) {
-            return res.status(404).json({ message: 'Utilizatorul nu a fost găsit.' });
-        }
-
-        await user.update({ nume, email, password, rol });
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json({ message: 'Eroare la actualizarea utilizatorului.', error });
-    }
-};
-
-const deleteUser = async (req, res) => {
-    try {
-        const { id } = req.params;
-
-        const user = await User.findByPk(id);
-        if (!user) {
-            return res.status(404).json({ message: 'Utilizatorul nu a fost găsit.' });
-        }
-
-        await user.destroy();
-        res.status(200).json({ message: 'Utilizatorul a fost șters cu succes.' });
-    } catch (error) {
-        res.status(500).json({ message: 'Eroare la ștergerea utilizatorului.', error });
+        res.status(500).json({ error: error.message });
     }
 };
 
 
 
 module.exports = {
+    getAllUsers,
     createUser,
-    getUsers,
-    updateUser,
-    deleteUser,
 };

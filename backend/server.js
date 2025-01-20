@@ -7,7 +7,8 @@ const userRoutes = require('./routes/userRoutes');
 const echipaRoutes = require('./routes/echipaRoutes');
 const proiectRoutes = require('./routes/proiectRoutes');
 const livrabilRoutes = require('./routes/livrabilRoutes');
-const permisiuneRoutes = require('./routes/permisiuniRoutes');
+const juriuRoutes = require('./routes/juriuRoutes');
+const invitatiiRoutes = require('./routes/invitatiiRoutes');
 
 dotenv.config();
 
@@ -23,7 +24,8 @@ app.use('/users', userRoutes);
 app.use('/echipe', echipaRoutes);
 app.use('/proiecte', proiectRoutes);
 app.use('/livrabile', livrabilRoutes);
-app.use('/permisiuni', permisiuneRoutes);
+app.use('/invitatii', invitatiiRoutes);
+app.use('/juriu', juriuRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend-ul functioneaza");
@@ -38,5 +40,3 @@ app.listen(port, () => {
 db.sync()
   .then(() => console.log("Modelele au fost sincronizate cu baza de date."))
   .catch(err => console.error("Eroare la sincronizare:", err));
-
-

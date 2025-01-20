@@ -1,12 +1,11 @@
 const express = require('express');
-const { getLivrabile, createLivrabil, updateLivrabil, deleteLivrabil } = require('../controllers/livrabilController');
-
 const router = express.Router();
+const { getAllLivrabile, getLivrabilById, createLivrabil, updateLivrabil, deleteLivrabil } = require('../controllers/livrabilController');
 
-router.post('/', createLivrabil);
-router.get('/', getLivrabile);
-
-router.put('/:id', updateLivrabil);
-router.delete('/:id', deleteLivrabil);
+router.get('/', getAllLivrabile);
+router.get('/livrabile/:id', getLivrabilById);
+router.post('/livrabile', createLivrabil);
+router.put('/livrabile/:id', updateLivrabil);
+router.delete('/livrabile/:id', deleteLivrabil);
 
 module.exports = router;

@@ -1,13 +1,10 @@
 const express = require('express');
-const { getEchipe, createEchipa, updateEchipa, deleteEchipa } = require('../controllers/echipaController');
-
 const router = express.Router();
+const { getAllEchipe, getEchipaById, createEchipa, updateEchipa, deleteEchipa } = require("../controllers/echipaController");
 
-
-
+router.get('/', getAllEchipe);
+router.get('/:id', getEchipaById);
 router.post('/', createEchipa);
-router.get('/', getEchipe);
-
 router.put('/:id', updateEchipa);
 router.delete('/:id', deleteEchipa);
 

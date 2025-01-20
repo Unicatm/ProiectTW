@@ -1,19 +1,15 @@
 const { DataTypes } = require('sequelize');
 const db = require('../database');
 
-const Echipa = db.define('Echipa', {
-    idEchipa: {
+const Juriu = db.define('Juriu', {
+    idJuriu: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    nume: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
 }, {
-    tableName: 'echipa',
+    tableName: 'juriu',
     timestamps: false,
 });
 
-module.exports = Echipa;
+module.exports = Juriu;

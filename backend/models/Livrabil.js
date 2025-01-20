@@ -1,20 +1,13 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const db = require('../database');
 const Proiect = require('./Proiect');
+const Juriu = require('./Juriu');
 
 const Livrabil = db.define('Livrabil', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-    },
-    idProiect: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: Proiect,
-            key: 'id',
-        },
     },
     titlu: {
         type: DataTypes.STRING,
@@ -24,7 +17,7 @@ const Livrabil = db.define('Livrabil', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    linkVideo: {
+    link: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -32,9 +25,29 @@ const Livrabil = db.define('Livrabil', {
         type: DataTypes.DATE,
         allowNull: false,
     },
+    idProiect: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Proiect,
+            key: 'id',
+        },
+    },
+    idJuriu:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Juriu,
+            key: 'idJuriu',
+        },
+    },
+    nota: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
 }, {
-    timestamps: false,
     tableName: 'livrabil',
+    timestamps: false,
 });
 
 module.exports = Livrabil;
