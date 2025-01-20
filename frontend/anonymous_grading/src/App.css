@@ -1,6 +1,36 @@
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  text-align: center; 
+
 }
+
+.App div {
+  margin: 10px;
+}
+
+.Register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  text-align: center; 
+}
+
+
+.Login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  text-align: center; 
+}
+
 
 .App-logo {
   height: 40vmin;
