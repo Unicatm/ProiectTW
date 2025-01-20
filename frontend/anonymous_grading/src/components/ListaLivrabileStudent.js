@@ -5,28 +5,10 @@ import Box from "@mui/material/Box";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Stack from "@mui/material/Stack";
 
-export default function ListaLivrabileStudent() {
-  const arrLivrabile = [
-    {
-      titlu: "Liv 1",
-      descriere: "jdsnfjdsnfjdnfjdn",
-      link: "htpp/jbhbhbhb",
-      data: "12.01.2023",
-    },
-    {
-      titlu: "Liv 2",
-      descriere: "dhgfg",
-      link: "htpp/jbhbhbhb",
-      data: "12.01.2023",
-    },
-    {
-      titlu: "Liv 3",
-      descriere: "cvcvv",
-      link: "htpp/sdsd",
-      data: "12.01.2023",
-    },
-  ];
-
+export default function ListaLivrabileStudent({ arrLivrabile }) {
+  if (!Array.isArray(arrLivrabile)) {
+    return <Typography>Nu sunt livrabile disponibile.</Typography>;
+  }
   return (
     <Box sx={{ width: "100%" }}>
       {arrLivrabile.map((livrabil, idx) => (

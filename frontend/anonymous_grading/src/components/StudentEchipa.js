@@ -1,13 +1,40 @@
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import ListaLivrabileStudent from "./ListaLivrabileStudent";
+import { Button } from "@mui/material";
+import ModalaLivrabil from "./ModalaLivrabil"; // Importă componenta modală
+import ModalaProiect from "./ModalaProiect";
 
 export default function StudentEchipa({
   numeEchipa,
   arrCoechipieri,
+  arrLivrabile,
   notaFinala,
+  idProiect,
+  idJuriu,
+  idEchipa,
 }) {
+  const [isModalaOpen, setIsModalaOpen] = useState(false); // State pentru a controla deschiderea modalei
+
+  const handleOpenModala = () => {
+    setIsModalaOpen(true); // Deschide modală
+  };
+
+  const handleCloseModala = () => {
+    setIsModalaOpen(false); // Închide modală
+  };
+
+  const handleLivrabilAdaugat = (nouLivrabil) => {
+    console.log("Livrabil nou adăugat:", nouLivrabil);
+    setIsModalaOpen(false); // Închide modală după adăugare
+    // Aici poți actualiza lista de livrabile sau alte stări
+  };
+
+  console.log("!!!!!!!!!!!!!");
+  console.log(idProiect);
+
   return (
     <Box
       sx={{
@@ -75,8 +102,18 @@ export default function StudentEchipa({
         >
           Livrabile
         </Typography>
-        <ListaLivrabileStudent />
+
+        <ListaLivrabileStudent arrLivrabile={arrLivrabile} />
       </Box>
+      {/* Modală pentru adăugare livrabil */}
+      <ModalaLivrabil
+        open={isModalaOpen} // Controlul stării deschidere/închidere
+        onClose={handleCloseModala} // Funcție de închidere
+        onLivrabilAdaugat={handleLivrabilAdaugat} // Funcție apelată la adăugare
+        idProiect={idProiect}
+        idJuriu={idJuriu}
+      />
+      <ModalaProiect idEchipa={idEchipa} />
     </Box>
   );
 }

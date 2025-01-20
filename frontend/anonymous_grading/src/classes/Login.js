@@ -86,7 +86,7 @@ const Login = () => {
                 btoa(emailInput.value + ":" + Date.now())
               );
               navigate("/student", {
-                state: { username: user.nume },
+                state: { username: user.nume, id: user.id },
               });
             }
           }

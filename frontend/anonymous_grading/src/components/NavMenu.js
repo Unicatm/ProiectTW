@@ -7,7 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
-const NavMenu = () => {
+const NavMenu = ({ idEchipa }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const userName = location.state?.username;
@@ -34,7 +34,11 @@ const NavMenu = () => {
               Nume: {userName}
             </Typography>
             <Button color="inherit">Acasa</Button>
-            <Button disabled color="inherit">
+            <Button
+              // onClick={handleEvalueaza}
+              disabled={idEchipa === null}
+              color="inherit"
+            >
               Evalueaza
             </Button>
           </Box>
