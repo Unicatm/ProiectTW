@@ -1,10 +1,12 @@
 import NavMenu from "../components/NavMenu";
 import ModalaEchipa from "../components/ModalaEchipa";
+import StudentEchipa from "../components/StudentEchipa";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import Box from "@mui/material/Box";
 
 export default function StudentPage() {
+  const arrCoechipieri = [{ nume: "Ion" }, { nume: "Vasile" }];
   return (
     <Box
       component="div"
@@ -27,6 +29,10 @@ export default function StudentPage() {
       >
         <ModalaEchipa />
       </Box>
+      <StudentEchipa
+        numeEchipa="Cei mai tari"
+        arrCoechipieri={arrCoechipieri}
+      />
     </Box>
   );
 }

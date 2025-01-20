@@ -9,6 +9,7 @@ const proiectRoutes = require('./routes/proiectRoutes');
 const livrabilRoutes = require('./routes/livrabilRoutes');
 const juriuRoutes = require('./routes/juriuRoutes');
 const invitatiiRoutes = require('./routes/invitatiiRoutes');
+const noteRoutes = require('./routes/noteRoutes');
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use('/proiecte', proiectRoutes);
 app.use('/livrabile', livrabilRoutes);
 app.use('/invitatii', invitatiiRoutes);
 app.use('/juriu', juriuRoutes);
+app.use('/note', noteRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend-ul functioneaza");

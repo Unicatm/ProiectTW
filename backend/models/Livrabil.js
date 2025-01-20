@@ -41,10 +41,6 @@ const Livrabil = db.define('Livrabil', {
             key: 'idJuriu',
         },
     },
-    nota: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
 }, {
     tableName: 'livrabil',
     timestamps: false,
