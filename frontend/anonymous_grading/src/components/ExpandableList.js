@@ -72,20 +72,30 @@ const CustomizedAccordions = ({ datePrintare }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              {Array.isArray(item.livrabile) && item.livrabile.length > 0 ? (
-                item.livrabile.map((livrabil, livIndex) => (
-                  <div key={livIndex} style={{ marginBottom: "10px" }}>
-
-                    <Typography><strong>Nume Livrabil:</strong> {livrabil.nume}</Typography>
-                    <Typography><strong>Nota:</strong> {livrabil.nota}</Typography>
-                    <hr />
-                  </div>
-                ))
-              ) : (
-                <Typography>Nu exista livrabile</Typography>
-              )}
+          <Typography>
+  {Array.isArray(item.livrabile) && item.livrabile.length > 0 ? (
+    item.livrabile.map((livrabil, livIndex) => (
+      <div key={livIndex} style={{ marginBottom: "10px" }}>
+        <Typography><strong>Nume Livrabil:</strong> {livrabil.nume}</Typography>
+        
+        {Array.isArray(livrabil.nota) && livrabil.nota.length > 0 ? (
+          livrabil.nota.map((nota, notaIndex) => (
+            <Typography key={notaIndex}>
+              <strong>Student {notaIndex + 1}:</strong> {nota}
             </Typography>
+          ))
+        ) : (
+          <Typography><strong>Nota:</strong> N/A</Typography>
+        )}
+
+        <hr />
+      </div>
+    ))
+  ) : (
+    <Typography>Nu exista livrabile</Typography>
+  )}
+</Typography>
+
           </AccordionDetails>
         </Accordion>
       ))}

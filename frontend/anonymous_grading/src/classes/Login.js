@@ -7,6 +7,7 @@ import useAlertSetter from "../hooks/useAlertSetter";
 import fetchUsers from "../DBinteractions/fetchUsers";
 import getLivrabilele from "../DBinteractions/getLivrabilele";
 import getProiecte from "../DBinteractions/getProiecte";
+import getNote from "../DBinteractions/getNote";
 import {
   BrowserRouter as Router,
   Route,
@@ -47,21 +48,27 @@ const Login = () => {
       const users = await fetchUsers();
       const proiecte = await getProiecte();
       const livrabile = await getLivrabilele();
+     // console.log("livrabile", livrabile);
+      const note = await getNote();
       const livrabileProiecte = [];
-      for (let proiect of proiecte) {
-        let livrabilProiect = [];
-        for (let livrabil of livrabile) {
-          if (proiect.id === livrabil.idProiect) {
-            livrabilProiect.push(livrabil);
-          }
-        }
-        const proiectLivrabile = {
+      proiecte.forEach((proiect) => {
+        const livrabileProiect = {
           proiect: proiect,
-          livrabile: livrabilProiect,
+          livrabile: [],
         };
-        livrabileProiecte.push(proiectLivrabile);
-      }
-      console.log(livrabileProiecte);
+        livrabile.forEach((livrabil) => {
+          if (livrabil.idProiect === proiect.id) {
+            const notes = note.filter((nota) => nota.idLivrabil === livrabil.id);            
+            livrabileProiect.livrabile.push({
+              nume: livrabil.titlu,
+              notes: notes ? notes : "N/A",
+            });
+          }
+        });
+        livrabileProiecte.push(livrabileProiect);
+
+      });
+      //console.log("date+note", livrabileProiecte);
       // Vedem daca utilizatorul exista
       const user = utils.checkIfUserExists(users, email);
       if (user === null) {

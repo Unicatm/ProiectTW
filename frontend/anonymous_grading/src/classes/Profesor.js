@@ -21,49 +21,57 @@ const ProfesorPage = () => {
         localStorage.removeItem("authTokenP");
          navigate("/Login");
     }
-     console.log("date",date);    
-    //console.log(users);
+     
 
     let datePrintare = []
-    for (let i = 0; i < date.length; i++) 
-    {
-       const obiect = date[i];
+    for (let i = 0; i < date.length; i++) {
+        let proiect = date[i].proiect;
+        let livrabile = date[i].livrabile;
+        let numeProiect = proiect.titlu;
+        let numarLivrabile = livrabile.length;
 
-       const proiect = obiect.proiect;
-       const livrabile = obiect.livrabile;
-       let media = 0;
-       if (livrabile.length > 0) {
-            
-            for (let j = 0; j < livrabile.length; j++) {
-                 media += livrabile[j].nota;
-            }
-            media = parseFloat((media / livrabile.length).toFixed(2));
-       }
-       const proiectPrinted = {
-          titlu: proiect.titlu,
-          NumarLivrabile: livrabile.length,
-          Media: media
-       }
-
-       const livrabilePrinted = livrabile.map(element => {
-        return {
-            nume: element.titlu,
-            nota: element.nota
+        let media = 0;
+        let suma = 0;
+        let count  = 0;
+        for (let livrabil of livrabile) {
+           for (let nota of livrabil.notes) {
+               suma += nota.nota;
+               count++;
+           }
+        } 
+        media = suma / count;
+        
+        let dateProiect = {
+            proiect: {
+                titlu: numeProiect,
+                NumarLivrabile: numarLivrabile,
+                Media: media
+            },
+            livrabile: []
         };
-       });
-       
-       datePrintare.push({
-           proiect: proiectPrinted,
-           livrabile: livrabilePrinted
-       });
-    }
 
+        for (let livrabil of livrabile) {
+            let numeLivrabil = livrabil.nume;
+            let note = [];
+            for (let nota of livrabil.notes) {
+                note.push(nota.nota);
+            }
+            let dateLivrabil = {
+                nume: numeLivrabil,
+                nota: note
+            };
+            dateProiect.livrabile.push(dateLivrabil);
+        }
+       
+        datePrintare.push(dateProiect);
+    }
+    //console.log("datePrintare", datePrintare);
 
     return (
         <div>
             <Toolbar name={userName} handleLogOut={handleLogOut}/>
             <div><CustomizedAccordions
-                datePrintare={datePrintare} // Fallback to empty object
+                datePrintare={datePrintare} 
             /></div>
         </div>
     );
