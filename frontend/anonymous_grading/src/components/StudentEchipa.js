@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import ListaLivrabileStudent from "./ListaLivrabileStudent";
 import { Button } from "@mui/material";
-import ModalaLivrabil from "./ModalaLivrabil"; // Importă componenta modală
+import ModalaLivrabil from "./ModalaLivrabil";
 import ModalaProiect from "./ModalaProiect";
 
 export default function StudentEchipa({
@@ -15,25 +15,49 @@ export default function StudentEchipa({
   idProiect,
   idJuriu,
   idEchipa,
+  actualizeazaLivrabile,
 }) {
-  const [isModalaOpen, setIsModalaOpen] = useState(false); // State pentru a controla deschiderea modalei
+  const [isModalaOpen, setIsModalaOpen] = useState(false);
+  const [proiectExistente, setProiectExistente] = useState(false); // Stare pentru proiect
+
+  console.log(proiectExistente);
 
   const handleOpenModala = () => {
-    setIsModalaOpen(true); // Deschide modală
+    setIsModalaOpen(true);
   };
 
   const handleCloseModala = () => {
-    setIsModalaOpen(false); // Închide modală
+    setIsModalaOpen(false);
   };
 
   const handleLivrabilAdaugat = (nouLivrabil) => {
     console.log("Livrabil nou adăugat:", nouLivrabil);
-    setIsModalaOpen(false); // Închide modală după adăugare
-    // Aici poți actualiza lista de livrabile sau alte stări
+    setIsModalaOpen(false);
   };
 
-  console.log("!!!!!!!!!!!!!");
-  console.log(idProiect);
+  const fetchProiect = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/proiecte/echipa/${idEchipa}`
+      );
+      if (!response.ok) {
+        throw new Error("Eroare la obținerea proiectului.");
+      }
+      const data = await response.json();
+      setProiectExistente(data && data.proiect);
+    } catch (error) {
+      console.error("Eroare la obținerea proiectului:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchProiect();
+  }, [idEchipa]);
+
+  const handleProiectAdaugat = (proiectNou) => {
+    console.log("Proiect nou adăugat:", proiectNou);
+    fetchProiect();
+  };
 
   return (
     <Box
@@ -45,6 +69,7 @@ export default function StudentEchipa({
         alignContent: "center",
         gap: "5rem",
         height: "100%",
+        padding: "5rem 0",
       }}
     >
       <Box
@@ -53,13 +78,15 @@ export default function StudentEchipa({
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          gap: "0.4rem",
+          gap: "0.8rem",
         }}
       >
-        <Typography>
+        <Typography sx={{ fontSize: "1.4rem" }}>
           <span style={{ fontWeight: "bold" }}>Nume echipă:</span> {numeEchipa}
         </Typography>
-        <Typography sx={{ fontWeight: "bold" }}>Coechipieri</Typography>
+        <Typography sx={{ fontWeight: "bold", fontSize: "1.4rem" }}>
+          Coechipieri
+        </Typography>
         <Stack direction="row" spacing={1}>
           {arrCoechipieri.map((coechipier, index) => (
             <Typography
@@ -78,10 +105,6 @@ export default function StudentEchipa({
             </Typography>
           ))}
         </Stack>
-        <Typography>
-          <span style={{ fontWeight: "bold" }}>Nota proiect:</span>
-          {notaFinala != null ? notaFinala : " Nu e notat"}
-        </Typography>
       </Box>
       <Box
         sx={{
@@ -105,15 +128,22 @@ export default function StudentEchipa({
 
         <ListaLivrabileStudent arrLivrabile={arrLivrabile} />
       </Box>
-      {/* Modală pentru adăugare livrabil */}
       <ModalaLivrabil
-        open={isModalaOpen} // Controlul stării deschidere/închidere
-        onClose={handleCloseModala} // Funcție de închidere
-        onLivrabilAdaugat={handleLivrabilAdaugat} // Funcție apelată la adăugare
+        open={isModalaOpen}
+        onClose={handleCloseModala}
+        onLivrabilAdaugat={() => {
+          if (actualizeazaLivrabile) {
+            actualizeazaLivrabile();
+          }
+        }}
         idProiect={idProiect}
         idJuriu={idJuriu}
       />
-      <ModalaProiect idEchipa={idEchipa} />
+      <ModalaProiect
+        idEchipa={idEchipa}
+        onProiectAdaugat={handleProiectAdaugat}
+        proiectExistente={proiectExistente} // Pasăm prop-ul pentru a ascunde butonul
+      />
     </Box>
   );
 }

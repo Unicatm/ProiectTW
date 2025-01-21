@@ -12,8 +12,8 @@ import { useEffect, useState } from "react";
 
 export default function ModalaEchipa({ onEchipaCreata }) {
   const [open, setOpen] = React.useState(false);
-  const [numeEchipa, setNumeEchipa] = React.useState(""); // State pentru numele echipei
-  const [membriEchipa, setMembriEchipa] = React.useState([]); // State pentru membrii echipei
+  const [numeEchipa, setNumeEchipa] = React.useState(""); 
+  const [membriEchipa, setMembriEchipa] = React.useState([]); 
   const [utilizatoriFaraEchipa, setUtilizatoriFaraEchipa] = React.useState([]);
 
   // Preluare utilizatori fără echipă
@@ -30,13 +30,12 @@ export default function ModalaEchipa({ onEchipaCreata }) {
       );
   }, []);
 
-  // Trimitere date către backend
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const data = {
       numeEchipa,
-      membriEchipa: membriEchipa.map((user) => user.email), // Extragem email-urile utilizatorilor selectați
+      membriEchipa: membriEchipa.map((user) => user.email), 
     };
 
     try {
@@ -63,7 +62,6 @@ export default function ModalaEchipa({ onEchipaCreata }) {
       }
 
       setOpen(false);
-      // Resetează state-urile
       setNumeEchipa("");
       setMembriEchipa([]);
     } catch (error) {
@@ -102,7 +100,6 @@ export default function ModalaEchipa({ onEchipaCreata }) {
           Crează echipa
         </DialogTitle>
         <DialogContent>
-          {/* Numele echipei */}
           <TextField
             autoFocus
             required
@@ -117,14 +114,13 @@ export default function ModalaEchipa({ onEchipaCreata }) {
             onChange={(e) => setNumeEchipa(e.target.value)}
           />
 
-          {/* Membrii echipei */}
           <Autocomplete
             multiple
             id="autocomplete-membri-echipa"
-            options={utilizatoriFaraEchipa || []} // Dacă este null/undefined, folosim un array gol
-            getOptionLabel={(option) => option.nume || ""} // Asigurăm că opțiunea are un label valid
+            options={utilizatoriFaraEchipa || []} 
+            getOptionLabel={(option) => option.nume || ""} 
             value={membriEchipa}
-            onChange={(event, value) => setMembriEchipa(value)} // Actualizăm membri selectați
+            onChange={(event, value) => setMembriEchipa(value)} 
             renderInput={(params) => (
               <TextField
                 {...params}

@@ -90,6 +90,19 @@ export default function StudentPage() {
     }
   }, [idEchipa]);
 
+  const actualizeazaLivrabile = () => {
+    if (idProiect !== null) {
+      fetch(`http://localhost:8080/livrabile/proiect/${idProiect}`)
+        .then((response) => response.json())
+        .then((dataLivrabile) => {
+          setArrLivrabile(dataLivrabile);
+        })
+        .catch((error) => {
+          console.error("Eroare la re-fetch livrabile:", error);
+        });
+    }
+  };
+
   console.log(echipa);
 
   return (
@@ -98,10 +111,10 @@ export default function StudentPage() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
+        height: "fit-content",
       }}
     >
-      <NavMenu idEchipa={idEchipa} />
+      <NavMenu idEchipa={idEchipa} idUser={id} />
       <Box
         component="div"
         sx={{
@@ -117,8 +130,7 @@ export default function StudentPage() {
         ) : idEchipa === null ? (
           <ModalaEchipa
             onEchipaCreata={(nouIdEchipa) => {
-              setIdEchipa(nouIdEchipa); // Actualizează ID-ul echipei
-              // Re-fetch detalii echipă și colegi
+              setIdEchipa(nouIdEchipa);
               fetch(`http://localhost:8080/echipe/${nouIdEchipa}`)
                 .then((response) => response.json())
                 .then((data) => {
@@ -148,6 +160,7 @@ export default function StudentPage() {
               idJuriu={1}
               idProiect={idProiect}
               idEchipa={idEchipa}
+              actualizeazaLivrabile={actualizeazaLivrabile}
             />
           )
         )}

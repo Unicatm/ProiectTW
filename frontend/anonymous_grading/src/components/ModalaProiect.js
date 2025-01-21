@@ -11,13 +11,17 @@ import AddIcon from "@mui/icons-material/Add";
 export default function ModalaProiect({
   open,
   onClose,
-  onLivrabilAdaugat,
   idEchipa,
+  onLivrabilAdaugat,
+  onProiectAdaugat,
+  proiectExistente,
 }) {
   const [titlu, setTitlu] = React.useState("");
   const [descriere, setDescriere] = React.useState("");
   const [link, setLink] = React.useState("");
   const [openM, setOpen] = React.useState(false);
+
+  console.log(proiectExistente);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -31,16 +35,13 @@ export default function ModalaProiect({
     console.log(data);
 
     try {
-      const response = await fetch(
-        "http://localhost:8080/proiecte/proiecte",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch("http://localhost:8080/proiecte/proiecte", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -48,10 +49,14 @@ export default function ModalaProiect({
       }
 
       const result = await response.json();
-      console.log("Livrabil adăugat:", result);
+      console.log("Proiect adăugat:", result);
 
       if (onLivrabilAdaugat) {
         onLivrabilAdaugat(result);
+      }
+
+      if (onProiectAdaugat) {
+        onProiectAdaugat(result);
       }
 
       handleClose();
@@ -73,14 +78,16 @@ export default function ModalaProiect({
 
   return (
     <Box>
-      <Button
-        variant="contained"
-        startIcon={<AddIcon />}
-        size="large"
-        onClick={handleClickOpen}
-      >
-        Creează un Proiect
-      </Button>
+      {!proiectExistente && (
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          size="large"
+          onClick={handleClickOpen}
+        >
+          Creează un Proiect
+        </Button>
+      )}
       <Dialog
         open={openM}
         onClose={handleClose}
