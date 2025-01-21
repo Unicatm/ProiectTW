@@ -18,7 +18,7 @@ export default function StudentEchipa({
   actualizeazaLivrabile,
 }) {
   const [isModalaOpen, setIsModalaOpen] = useState(false);
-  const [proiectExistente, setProiectExistente] = useState(false); 
+  const [proiectExistente, setProiectExistente] = useState(false);
 
   console.log(proiectExistente);
 
@@ -69,6 +69,7 @@ export default function StudentEchipa({
         alignContent: "center",
         gap: "5rem",
         height: "100%",
+        width: "50%",
         padding: "5rem 0",
       }}
     >
@@ -85,7 +86,7 @@ export default function StudentEchipa({
           <span style={{ fontWeight: "bold" }}>Nume echipă:</span> {numeEchipa}
         </Typography>
         <Typography sx={{ fontWeight: "bold", fontSize: "1.4rem" }}>
-          Coechipieri
+          Membri:
         </Typography>
         <Stack direction="row" spacing={1}>
           {arrCoechipieri.map((coechipier, index) => (
@@ -108,7 +109,7 @@ export default function StudentEchipa({
       </Box>
       <Box
         sx={{
-          width: "60%",
+          width: "100%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -116,29 +117,39 @@ export default function StudentEchipa({
           gap: "4rem",
         }}
       >
-        <Typography
+        <Box
           sx={{
-            alignSelf: "flex-start",
-            fontWeight: "bold",
-            fontSize: "1.4rem",
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
           }}
         >
-          Livrabile
-        </Typography>
+          <Typography
+            sx={{
+              alignSelf: "flex-start",
+              fontWeight: "bold",
+              fontSize: "1.4rem",
+            }}
+          >
+            Livrabile
+          </Typography>
+
+          <ModalaLivrabil
+            open={isModalaOpen}
+            onClose={handleCloseModala}
+            onLivrabilAdaugat={() => {
+              if (actualizeazaLivrabile) {
+                actualizeazaLivrabile();
+              }
+            }}
+            idProiect={idProiect}
+            idJuriu={idJuriu}
+          />
+        </Box>
 
         <ListaLivrabileStudent arrLivrabile={arrLivrabile} />
       </Box>
-      <ModalaLivrabil
-        open={isModalaOpen}
-        onClose={handleCloseModala}
-        onLivrabilAdaugat={() => {
-          if (actualizeazaLivrabile) {
-            actualizeazaLivrabile();
-          }
-        }}
-        idProiect={idProiect}
-        idJuriu={idJuriu}
-      />
+
       <ModalaProiect
         idEchipa={idEchipa}
         onProiectAdaugat={handleProiectAdaugat}
