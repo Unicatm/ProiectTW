@@ -2,15 +2,14 @@ const User = require("../models/User");
 const Echipa = require("../models/Echipa");
 const Livrabil = require("../models/Livrabil");
 const Proiect = require("../models/Proiect");
-const Evaluare = require("../models/Evaluare"); // Model pentru tabela Evaluare
-const Note = require("../models/Note"); // Model pentru tabela Note
+const Evaluare = require("../models/Evaluare");
+const Note = require("../models/Note"); 
 const { Op } = require("sequelize");
 
 const evalueazaProiect = async (req, res) => {
-  const { idUser } = req.body; // Extrage idUser din corpul cererii
+  const { idUser } = req.body; 
 
   try {
-    // Verifică utilizatorul
     const user = await User.findByPk(idUser);
     if (!user) {
       return res.status(404).json({ message: "Utilizatorul nu există." });
@@ -23,10 +22,8 @@ const evalueazaProiect = async (req, res) => {
         .json({ message: "Utilizatorul nu aparține unei echipe valide." });
     }
 
-    // Verifică dacă utilizatorul are deja o echipă asignată pentru evaluare
     let evaluareExistenta = await Evaluare.findOne({ where: { idUser } });
     if (evaluareExistenta) {
-      // Găsește detalii despre echipa asignată
       const echipaAleasa = await Echipa.findByPk(evaluareExistenta.idEchipa);
       if (!echipaAleasa) {
         return res
@@ -34,7 +31,6 @@ const evalueazaProiect = async (req, res) => {
           .json({ message: "Echipa asignată nu mai există." });
       }
 
-      // Găsește proiectul asociat echipei
       const proiect = await Proiect.findOne({
         where: { idEchipa: echipaAleasa.idEchipa },
       });
@@ -45,12 +41,10 @@ const evalueazaProiect = async (req, res) => {
           .json({ message: "Proiectul asociat echipei nu există." });
       }
 
-      // Găsește livrabilele asociate proiectului
       const livrabile = await Livrabil.findAll({
         where: { idProiect: proiect.id },
       });
 
-      // Adaugă notele utilizatorului pentru fiecare livrabil
       const livrabileCuNote = await Promise.all(
         livrabile.map(async (livrabil) => {
           const note = await Note.findAll({
@@ -61,7 +55,7 @@ const evalueazaProiect = async (req, res) => {
             note: note.map((n) => ({
               idUser: n.idUser,
               nota: n.nota,
-              data: n.dataAdaugare, // Adaugăm și data, dacă există
+              data: n.dataAdaugare, 
             })),
           };
         })
@@ -74,7 +68,6 @@ const evalueazaProiect = async (req, res) => {
       });
     }
 
-    // Găsește echipele disponibile
     const echipeDisponibile = await Echipa.findAll({
       where: { idEchipa: { [Op.ne]: echipaUtilizator } },
     });
@@ -85,7 +78,6 @@ const evalueazaProiect = async (req, res) => {
         .json({ message: "Nu există alte echipe de evaluat." });
     }
 
-    // Selectează o echipă aleatorie
     const echipaAleasa =
       echipeDisponibile[Math.floor(Math.random() * echipeDisponibile.length)];
 
@@ -95,13 +87,11 @@ const evalueazaProiect = async (req, res) => {
         .json({ message: "Nu a fost aleasă o echipă validă." });
     }
 
-    // Salvează asocierea între utilizator și echipă în tabelul Evaluare
     await Evaluare.create({
       idUser,
       idEchipa: echipaAleasa.idEchipa,
     });
 
-    // Găsește proiectul asociat echipei
     const proiect = await Proiect.findOne({
       where: { idEchipa: echipaAleasa.idEchipa },
     });
@@ -112,12 +102,10 @@ const evalueazaProiect = async (req, res) => {
         .json({ message: "Proiectul asociat echipei nu există." });
     }
 
-    // Găsește livrabilele asociate proiectului
     const livrabile = await Livrabil.findAll({
       where: { idProiect: proiect.id },
     });
 
-    // Adaugă notele utilizatorului pentru fiecare livrabil
     const livrabileCuNote = await Promise.all(
       livrabile.map(async (livrabil) => {
         const note = await Note.findAll({
@@ -133,7 +121,6 @@ const evalueazaProiect = async (req, res) => {
       })
     );
 
-    // Răspuns JSON
     res.json({
       echipa: echipaAleasa,
       proiect,

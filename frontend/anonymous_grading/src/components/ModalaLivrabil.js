@@ -35,9 +35,6 @@ export default function ModalaLivrabil({
       idJuriu,
     };
 
-    console.log("******************");
-    console.log(data);
-
     try {
       const response = await fetch(
         "http://localhost:8080/livrabile/livrabile",

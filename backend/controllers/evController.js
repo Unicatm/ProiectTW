@@ -2,24 +2,20 @@ const Evaluare = require("../models/Evaluare");
 const User = require("../models/User");
 const Echipa = require("../models/Echipa");
 
-// Creează o nouă evaluare (asociază un utilizator cu o echipă evaluată)
 const createEvaluare = async (req, res) => {
   const { idUser, idEchipaEvaluata } = req.body;
 
   try {
-    // Verifică dacă utilizatorul există
     const user = await User.findByPk(idUser);
     if (!user) {
       return res.status(404).json({ message: "Utilizatorul nu există." });
     }
 
-    // Verifică dacă echipa evaluată există
     const echipa = await Echipa.findByPk(idEchipaEvaluata);
     if (!echipa) {
       return res.status(404).json({ message: "Echipa evaluată nu există." });
     }
 
-    // Creează evaluarea
     const evaluare = await Evaluare.create({ idUser, idEchipaEvaluata });
     res.status(201).json({ message: "Evaluarea a fost creată cu succes.", evaluare });
   } catch (error) {
@@ -28,7 +24,6 @@ const createEvaluare = async (req, res) => {
   }
 };
 
-// Obține toate evaluările
 const getAllEvaluari = async (req, res) => {
   try {
     const evaluari = await Evaluare.findAll({
@@ -44,7 +39,6 @@ const getAllEvaluari = async (req, res) => {
   }
 };
 
-// Obține o evaluare după ID
 const getEvaluareById = async (req, res) => {
   const { id } = req.params;
 
@@ -65,7 +59,6 @@ const getEvaluareById = async (req, res) => {
   }
 };
 
-// Șterge o evaluare după ID
 const deleteEvaluare = async (req, res) => {
   const { id } = req.params;
 
@@ -83,7 +76,6 @@ const deleteEvaluare = async (req, res) => {
   }
 };
 
-// Actualizează o evaluare (opțional, în caz că ai nevoie de acest endpoint)
 const updateEvaluare = async (req, res) => {
   const { id } = req.params;
   const { idUser, idEchipaEvaluata } = req.body;

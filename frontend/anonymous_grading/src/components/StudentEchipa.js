@@ -18,7 +18,7 @@ export default function StudentEchipa({
   actualizeazaLivrabile,
 }) {
   const [isModalaOpen, setIsModalaOpen] = useState(false);
-  const [proiectExistente, setProiectExistente] = useState(false); // Stare pentru proiect
+  const [proiectExistente, setProiectExistente] = useState(false); 
 
   console.log(proiectExistente);
 
@@ -142,7 +142,7 @@ export default function StudentEchipa({
       <ModalaProiect
         idEchipa={idEchipa}
         onProiectAdaugat={handleProiectAdaugat}
-        proiectExistente={proiectExistente} // Pasăm prop-ul pentru a ascunde butonul
+        proiectExistente={proiectExistente}
       />
     </Box>
   );

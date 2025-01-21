@@ -30,7 +30,6 @@ export default function ModalaEvalueaza({ open, onClose, idUser }) {
           setLivrabile(data.livrabile);
           setLoading(false);
 
-          // Construiește un obiect cu notele utilizatorului pentru fiecare livrabil
           const notePerLivrabil = {};
           data.livrabile.forEach((livrabil) => {
             const noteExistente = livrabil.note;
@@ -68,13 +67,11 @@ export default function ModalaEvalueaza({ open, onClose, idUser }) {
       .then((data) => {
         console.log("Nota salvată:", data);
 
-        // Actualizăm nota în state pentru ca inputul și butonul să se actualizeze
         setNoteLivrabile((prev) => ({
           ...prev,
           [idLivrabil]: nota,
         }));
 
-        // După salvarea notei, actualizăm și livrabilele, pentru a face inputul readOnly
         setLivrabile((prev) =>
           prev.map((livrabil) =>
             livrabil.id === idLivrabil ? { ...livrabil, nota } : livrabil
@@ -121,7 +118,6 @@ export default function ModalaEvalueaza({ open, onClose, idUser }) {
                     <strong>{livrabil.titlu}</strong>: {livrabil.descriere}
                   </Typography>
                   <TextField
-                    // Dacă nota este deja adăugată, input-ul devine read-only
                     InputProps={{
                       readOnly: isNotaData,
                     }}

@@ -16,7 +16,7 @@ const NavMenu = ({ idEchipa, idUser }) => {
   const authKey = localStorage.getItem("authTokenS");
 
   const [open, setOpen] = React.useState(false);
-  const [livrabile, setLivrabile] = useState([]); // Presupun că ai starea livrabilelor
+  const [livrabile, setLivrabile] = useState([]); 
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,13 +37,10 @@ const NavMenu = ({ idEchipa, idUser }) => {
     navigate("/Login");
   };
 
-  // Funcția care actualizează livrabilele
   const actualizeazaLivrabile = () => {
-    // Presupun că ai o metodă pentru a aduce datele livrabilelor actualizate
     fetchLivrabile();
   };
 
-  // Funcția pentru obținerea livrabilelor (poate fi un apel API)
   const fetchLivrabile = async () => {
     try {
       const response = await fetch("http://localhost:8080/livrabile");

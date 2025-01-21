@@ -16,7 +16,6 @@ export default function ModalaEchipa({ onEchipaCreata }) {
   const [membriEchipa, setMembriEchipa] = React.useState([]); 
   const [utilizatoriFaraEchipa, setUtilizatoriFaraEchipa] = React.useState([]);
 
-  // Preluare utilizatori fără echipă
   useEffect(() => {
     fetch("http://localhost:8080/users/faraEchipa")
       .then((response) => response.json())
