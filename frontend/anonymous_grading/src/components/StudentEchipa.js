@@ -44,7 +44,11 @@ export default function StudentEchipa({
         throw new Error("Eroare la obținerea proiectului.");
       }
       const data = await response.json();
-      setProiectExistente(data && data.proiect);
+      if (idProiect) {
+        setProiectExistente(true);
+      } else {
+        setProiectExistente(false);
+      }
     } catch (error) {
       console.error("Eroare la obținerea proiectului:", error.message);
     }
@@ -117,37 +121,41 @@ export default function StudentEchipa({
           gap: "4rem",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
-          <Typography
-            sx={{
-              alignSelf: "flex-start",
-              fontWeight: "bold",
-              fontSize: "1.4rem",
-            }}
-          >
-            Livrabile
-          </Typography>
+        {proiectExistente && (
+          <>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <Typography
+                sx={{
+                  alignSelf: "flex-start",
+                  fontWeight: "bold",
+                  fontSize: "1.4rem",
+                }}
+              >
+                Livrabile
+              </Typography>
 
-          <ModalaLivrabil
-            open={isModalaOpen}
-            onClose={handleCloseModala}
-            onLivrabilAdaugat={() => {
-              if (actualizeazaLivrabile) {
-                actualizeazaLivrabile();
-              }
-            }}
-            idProiect={idProiect}
-            idJuriu={idJuriu}
-          />
-        </Box>
+              <ModalaLivrabil
+                open={isModalaOpen}
+                onClose={handleCloseModala}
+                onLivrabilAdaugat={() => {
+                  if (actualizeazaLivrabile) {
+                    actualizeazaLivrabile();
+                  }
+                }}
+                idProiect={idProiect}
+                idJuriu={idJuriu}
+              />
+            </Box>
 
-        <ListaLivrabileStudent arrLivrabile={arrLivrabile} />
+            <ListaLivrabileStudent arrLivrabile={arrLivrabile} />
+          </>
+        )}
       </Box>
 
       <ModalaProiect

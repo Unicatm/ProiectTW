@@ -21,6 +21,7 @@ export default function ModalaProiect({
   const [link, setLink] = React.useState("");
   const [openM, setOpen] = React.useState(false);
 
+  console.log("JHHHHHH");
   console.log(proiectExistente);
 
   const handleSubmit = async (event) => {
